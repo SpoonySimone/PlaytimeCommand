@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.ChatFormatting;
+import me.spoony.playtimecommand.PlaytimeCommand;
 
 public class PlaytimeCommandCommand {
 
@@ -18,7 +19,9 @@ public class PlaytimeCommandCommand {
         dispatcher.register(Commands.literal("playtime")
                 .executes(PlaytimeCommandCommand::execute)
                 .then(Commands.argument("player", EntityArgument.player())
-                        .executes(PlaytimeCommandCommand::executeOtherPlayer)));
+                        .executes(PlaytimeCommandCommand::executeOtherPlayer))
+                .then(Commands.literal("about")
+                        .executes(PlaytimeCommandCommand::executeAbout)));
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {
@@ -49,6 +52,24 @@ public class PlaytimeCommandCommand {
             source.sendFailure(Component.literal("Failed to find the specified player!"));
             return 0;
         }
+    }
+
+    private static int executeAbout(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
+
+        // Create the about message without clickable links
+        Component aboutMessage = Component.empty()
+                .append(Component.literal("Playtime Command")
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
+                .append(Component.literal(" " + PlaytimeCommand.getCurrentVersion())
+                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
+                .append(Component.literal(" by ")
+                        .withStyle(ChatFormatting.GOLD))
+                .append(Component.literal("SpoonySimone")
+                        .withStyle(ChatFormatting.DARK_GREEN));
+
+        source.sendSuccess(() -> aboutMessage, false);
+        return 1;
     }
 
     private static int showPlaytime(ServerPlayer player, CommandSourceStack source, boolean isSelf) {
