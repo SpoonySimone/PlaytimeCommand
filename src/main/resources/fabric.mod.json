@@ -3,7 +3,7 @@
   "id": "playtimecommand",
   "version": "${version}",
   "name": "Playtime Command",
-  "description": "See users' playtime with a simple command",
+  "description": "See users' playtime with a simple command!",
   "authors": ["SpoonySimone"],
   "contact": {},
   "license": "GPL-3.0",
