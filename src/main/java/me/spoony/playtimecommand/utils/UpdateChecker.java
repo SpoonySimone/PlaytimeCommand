@@ -32,8 +32,6 @@ public class UpdateChecker {
                 LOGGER.warn("[Playtime Command] A newer version {} is available! Please consider updating!", latestVersion);
                 LOGGER.warn("[Playtime Command] Current version: {}", CURRENT_VERSION);
                 LOGGER.warn("[Playtime Command] Download here: {}", modrinthLink);
-            } else {
-                LOGGER.info("[Playtime Command] Already on latest version ({})", latestVersion);
             }
         } catch (Exception e) {
             LOGGER.error("[Playtime Command] Failed to check version. Assuming we're on latest version.", e);
