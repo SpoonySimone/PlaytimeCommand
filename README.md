@@ -15,6 +15,7 @@ The mod has no configuration and is entirely plug and play, simply drop this in 
 # Commands
 - `/playtime` - See your own playtime
 - `/playtime <username>` - See another online player's playtime
+- `/playtime about` - See mod information
 
 # Credits
 Thanks to [Lucide](https://lucide.dev/) for providing the message icon
