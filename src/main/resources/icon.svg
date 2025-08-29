@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="64"
+   height="64"
+   viewBox="0 0 24 24"
+   fill="none"
+   stroke="#605c5c"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   class="lucide lucide-binoculars-icon lucide-binoculars"
+   version="1.1"
+   id="svg6"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6">
+    <linearGradient
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="0"
+       y1="128"
+       x2="110"
+       y2="18"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient1">
+      <stop
+         style="stop-color:#f9a8d4;stop-opacity:0.7764706;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#fdba74;stop-opacity:0.90196079;"
+         offset="1"
+         id="stop9" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer3">
+    <path
+       style="fill:url(#linearGradient2);fill-opacity:1;stroke:#1a2229;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       id="rect2"
+       width="128"
+       height="128"
+       x="0"
+       y="0"
+       d="m 25,0 h 78 a 25,25 45 0 1 25,25 v 78 a 25,25 135 0 1 -25,25 H 25 A 25,25 45 0 1 0,103 V 25 A 25,25 135 0 1 25,0 Z"
+       transform="scale(0.1875)" />
+    <path
+       style="fill:#000000;fill-opacity:0.15;stroke:#1a2229;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       id="path9"
+       width="128"
+       height="128"
+       x="0"
+       y="0"
+       d="m 25,0 h 78 a 25,25 45 0 1 25,25 v 78 a 25,25 135 0 1 -25,25 H 25 A 25,25 45 0 1 0,103 V 25 A 25,25 135 0 1 25,0 Z"
+       transform="scale(0.1875)" />
+  </g>
+  <g
+     id="layer2">
+    <g
+       id="g2"
+       transform="matrix(0.49431821,0,0,0.49431821,6.0681817,11.880682)"
+       style="stroke:#1a2229;stroke-opacity:1">
+      <line
+         x1="10"
+         x2="14"
+         y1="2"
+         y2="2"
+         id="line1"
+         style="stroke:#1a2229;stroke-opacity:1" />
+      <line
+         x1="12"
+         x2="15"
+         y1="14"
+         y2="11"
+         id="line2"
+         style="stroke:#1a2229;stroke-opacity:1" />
+      <circle
+         cx="12"
+         cy="14"
+         r="8"
+         id="circle2"
+         style="stroke:#1a2229;stroke-opacity:1" />
+    </g>
+    <g
+       id="g6"
+       transform="translate(-0.047194)"
+       style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-opacity:1">
+      <path
+         d="m 11.109694,5.625 h 1.875001"
+         id="path1"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+      <path
+         d="M 15.328445,4.2187499 V 2.8124998 a 0.46875002,0.46875002 0 0 0 -0.46875,-0.46875 h -0.937501 a 0.46875002,0.46875002 0 0 0 -0.46875,0.46875 v 1.4062501"
+         id="path2"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+      <path
+         d="m 15.797194,10.78125 a 0.93750004,0.93750004 0 0 0 0.9375,-0.9374994 V 8.0385938 c 0,-0.6515625 -0.9375,-1.3884375 -0.9375,-2.2635938 V 4.6874999 a 0.46875002,0.46875002 0 0 0 -0.468749,-0.46875 h -1.875001 a 0.46875002,0.46875002 0 0 0 -0.468749,0.46875 v 5.1562507 a 0.93750004,0.93750004 0 0 0 0.937499,0.9374994 z"
+         id="path3"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+      <path
+         d="m 16.734694,8.4375001 h -9.375"
+         id="path4"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+      <path
+         d="M 8.2971936,10.78125 A 0.93750004,0.93750004 0 0 1 7.359694,9.8437506 V 8.0385938 C 7.359694,7.3870313 8.2971936,6.6501563 8.2971936,5.775 V 4.6874999 a 0.46875002,0.46875002 0 0 1 0.4687508,-0.46875 h 1.8750006 a 0.46875002,0.46875002 0 0 1 0.468749,0.46875 v 5.1562507 a 0.93750004,0.93750004 0 0 1 -0.9375,0.9374994 z"
+         id="path5"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+      <path
+         d="M 10.640945,4.2187499 V 2.8124998 a 0.46875002,0.46875002 0 0 0 -0.468751,-0.46875 H 9.2346942 a 0.46875002,0.46875002 0 0 0 -0.4687498,0.46875 v 1.4062501"
+         id="path6"
+         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

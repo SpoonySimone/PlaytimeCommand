@@ -98,7 +98,7 @@ public class PlaytimeViewerCommand {
         if (seconds > 0 || (days == 0 && hours == 0 && minutes == 0)) {
             result.append(seconds).append(seconds == 1 ? " second" : " seconds");
         }
-        
+
         result.append(".");
 
         return result.toString();

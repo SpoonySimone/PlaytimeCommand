@@ -7,7 +7,7 @@
   "authors": ["SpoonySimone"],
   "contact": {},
   "license": "GPL-3.0",
-  "icon": "icon.png",
+  "icon": "icon.svg",
   "environment": "server",
   "entrypoints": {
     "main": [
