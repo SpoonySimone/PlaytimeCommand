@@ -1,4 +1,4 @@
-package me.spoony.playtimeviewer;
+package me.spoony.playtimecommand.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -10,15 +10,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.ChatFormatting;
 
-public class PlaytimeViewerCommand {
+public class PlaytimeCommandCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher,
                                 net.minecraft.commands.CommandBuildContext registryAccess,
                                 Commands.CommandSelection environment) {
         dispatcher.register(Commands.literal("playtime")
-                .executes(PlaytimeViewerCommand::execute)
+                .executes(PlaytimeCommandCommand::execute)
                 .then(Commands.argument("player", EntityArgument.player())
-                        .executes(PlaytimeViewerCommand::executeOtherPlayer)));
+                        .executes(PlaytimeCommandCommand::executeOtherPlayer)));
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {

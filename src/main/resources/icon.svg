@@ -59,59 +59,15 @@
   </g>
   <g
      id="layer2">
-    <g
-       id="g2"
-       transform="matrix(0.49431821,0,0,0.49431821,6.0681817,11.880682)"
-       style="stroke:#1a2229;stroke-opacity:1">
-      <line
-         x1="10"
-         x2="14"
-         y1="2"
-         y2="2"
-         id="line1"
-         style="stroke:#1a2229;stroke-opacity:1" />
-      <line
-         x1="12"
-         x2="15"
-         y1="14"
-         y2="11"
-         id="line2"
-         style="stroke:#1a2229;stroke-opacity:1" />
-      <circle
-         cx="12"
-         cy="14"
-         r="8"
-         id="circle2"
-         style="stroke:#1a2229;stroke-opacity:1" />
-    </g>
-    <g
-       id="g6"
-       transform="translate(-0.047194)"
-       style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-opacity:1">
-      <path
-         d="m 11.109694,5.625 h 1.875001"
-         id="path1"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-      <path
-         d="M 15.328445,4.2187499 V 2.8124998 a 0.46875002,0.46875002 0 0 0 -0.46875,-0.46875 h -0.937501 a 0.46875002,0.46875002 0 0 0 -0.46875,0.46875 v 1.4062501"
-         id="path2"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-      <path
-         d="m 15.797194,10.78125 a 0.93750004,0.93750004 0 0 0 0.9375,-0.9374994 V 8.0385938 c 0,-0.6515625 -0.9375,-1.3884375 -0.9375,-2.2635938 V 4.6874999 a 0.46875002,0.46875002 0 0 0 -0.468749,-0.46875 h -1.875001 a 0.46875002,0.46875002 0 0 0 -0.468749,0.46875 v 5.1562507 a 0.93750004,0.93750004 0 0 0 0.937499,0.9374994 z"
-         id="path3"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-      <path
-         d="m 16.734694,8.4375001 h -9.375"
-         id="path4"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-      <path
-         d="M 8.2971936,10.78125 A 0.93750004,0.93750004 0 0 1 7.359694,9.8437506 V 8.0385938 C 7.359694,7.3870313 8.2971936,6.6501563 8.2971936,5.775 V 4.6874999 a 0.46875002,0.46875002 0 0 1 0.4687508,-0.46875 h 1.8750006 a 0.46875002,0.46875002 0 0 1 0.468749,0.46875 v 5.1562507 a 0.93750004,0.93750004 0 0 1 -0.9375,0.9374994 z"
-         id="path5"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-      <path
-         d="M 10.640945,4.2187499 V 2.8124998 a 0.46875002,0.46875002 0 0 0 -0.468751,-0.46875 H 9.2346942 a 0.46875002,0.46875002 0 0 0 -0.4687498,0.46875 v 1.4062501"
-         id="path6"
-         style="fill:none;fill-opacity:0.15;stroke:#1a2229;stroke-width:0.9375;stroke-opacity:1" />
-    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.94972px;line-height:0;font-family:Minecraftia;-inkscape-font-specification:'Minecraftia, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#1a2229;fill-opacity:1;stroke:#1a2229;stroke-width:0.320308;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="1.1382701"
+       y="15.94972"
+       id="text1"><tspan
+         id="tspan2"
+         x="1.1382701"
+         y="15.94972"
+         style="fill:#1a2229;fill-opacity:1;stroke:#1a2229;stroke-width:0.320308;stroke-dasharray:none;stroke-opacity:1">/playtime</tspan></text>
   </g>
 </svg>

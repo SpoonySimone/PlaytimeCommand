@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "playtimeviewer",
+  "id": "playtimecommand",
   "version": "${version}",
-  "name": "Playtime Viewer",
+  "name": "Playtime Command",
   "description": "",
   "authors": ["SpoonySimone"],
   "contact": {},
@@ -11,7 +11,7 @@
   "environment": "server",
   "entrypoints": {
     "main": [
-      "me.spoony.playtimeviewer.PlaytimeViewer"
+      "me.spoony.playtimecommand.PlaytimeCommand"
     ]
   },
   "depends": {
