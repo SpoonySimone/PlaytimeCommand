@@ -30,9 +30,9 @@ public class PlaytimeCommandCommand {
                 .then(Commands.argument("player", StringArgumentType.word())
                         .suggests(ONLINE_PLAYERS)
                         .executes(PlaytimeCommandCommand::executeOtherPlayer))
-                .then(Commands.literal("about")
+                .then(Commands.literal("--about")
                         .executes(PlaytimeCommandCommand::executeAbout))
-                .then(Commands.literal("help")
+                .then(Commands.literal("--help")
                         .executes(PlaytimeCommandCommand::executeHelp)));
     }
 
