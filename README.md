@@ -6,6 +6,8 @@ The playtime the mod fetches is the same one that you see in the Statistics menu
 
 The mod has no configuration and is entirely plug and play, simply drop this in your mods folder and you're good to go.
 
+Playtime Command automatically checks for updates on startup and will let you know in console if there is one.
+
 # Mod showcase
 **Chat message**
 
