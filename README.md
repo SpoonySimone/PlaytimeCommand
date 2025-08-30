@@ -17,8 +17,8 @@ Playtime Command automatically checks for updates on startup and will let you kn
 # Commands
 - `/playtime` - See your own playtime
 - `/playtime <username>` - See another online player's playtime
-- `/playtime about` - See mod information
-- `/playtime help` - See command usage
+- `/playtime --about` - See mod information
+- `/playtime --help` - See command usage
 
 # Credits
 Thanks to [Lucide](https://lucide.dev/) for providing the message icon
