@@ -20,9 +20,6 @@ Playtime Command automatically checks for updates on startup and will let you kn
 - `/playtime --about` - See mod information
 - `/playtime --help` - See command usage
 
-# Credits
-Thanks to [Lucide](https://lucide.dev/) for providing the message icon
-
 # Download
 You can download the mod [here](https://modrinth.com/project/PlaytimeCommand).
 
