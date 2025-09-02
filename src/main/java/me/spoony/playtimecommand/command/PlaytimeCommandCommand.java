@@ -97,8 +97,8 @@ public class PlaytimeCommandCommand {
                 .withStyle(ChatFormatting.GOLD)
                 .append(Component.literal("/playtime - See your own playtime\n"))
                 .append(Component.literal("/playtime ").append(Component.literal("<username>").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See another online player's playtime\n")))
-                .append(Component.literal("/playtime ").append(Component.literal("about").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See mod information\n")))
-                .append(Component.literal("/playtime ").append(Component.literal("help").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See command usage")));
+                .append(Component.literal("/playtime ").append(Component.literal("--about").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See mod information\n")))
+                .append(Component.literal("/playtime ").append(Component.literal("--help").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See command usage")));
 
         source.sendSuccess(() -> helpMessage, false);
         return 1;
