@@ -37,7 +37,7 @@ public class PlaytimeCommand implements ModInitializer {
     public static String getCurrentVersion() {
         try {
             return FabricLoader.getInstance()
-                    .getModContainer("playtimecommand") // Replace with your mod ID from fabric.mod.json
+                    .getModContainer("playtimecommand")
                     .map(container -> container.getMetadata().getVersion().getFriendlyString())
                     .orElse("unknown");
         } catch (Exception e) {
