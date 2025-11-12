@@ -2,11 +2,12 @@
 
 Playtime Command is a very simple mod that lets you see your own or other online players' playtime.
 
-The playtime the mod fetches is the same one that you see in the Statistics menu, which is stored server-side.
-
-The mod has no configuration and is entirely plug and play, simply drop this in your mods folder and you're good to go.
-
-Playtime Command automatically checks for updates on startup and will let you know in console if there is one.
+The mod provides some unique features, such as:
+- **Plug and play**: Requires zero configuration, in fact there isn't even one!
+- **Accurate playtime**: This mod uses the same playtime that's tracked by Minecraft itself, ensuring accurate data without relying on other methods!
+- **Full Geyser support**: Use Playtime Command with Minecraft Bedrock usernames just like you would with Minecraft Java usernames!
+- **Lightweight and simple code**: Uses almost zero resources and is designed to allow you to update your server without needing to update Playtime Command (except some rare occurrences)!
+- **Automatic update checker**: Playtime Command automatically checks for updates on startup and will let you know via a message in console if there is one.
 
 # Mod showcase
 **Chat message**
