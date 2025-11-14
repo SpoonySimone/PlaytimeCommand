@@ -1,6 +1,6 @@
 package me.spoony.playtimecommand;
 
-import me.spoony.playtimecommand.command.PlaytimeCommandCommand;
+import me.spoony.playtimecommand.commands.RootCommand;
 import me.spoony.playtimecommand.utils.UpdateChecker;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -19,13 +19,11 @@ public class PlaytimeCommand implements ModInitializer {
 
         LOGGER.info("[Playtime Command] Initialization started");
 
-        // Register the playtime command
-        CommandRegistrationCallback.EVENT.register(PlaytimeCommandCommand::register);
+        CommandRegistrationCallback.EVENT.register(RootCommand::register);
         LOGGER.info("[Playtime Command] Registered command");
 
         UpdateChecker.checkUpdate();
 
-        // Register shutdown event
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             LOGGER.info("[Playtime Command] Shutting down");
         });

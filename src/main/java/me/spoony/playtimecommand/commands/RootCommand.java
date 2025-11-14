@@ -1,4 +1,4 @@
-package me.spoony.playtimecommand.command;
+package me.spoony.playtimecommand.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -11,10 +11,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.ChatFormatting;
-import me.spoony.playtimecommand.PlaytimeCommand;
 import static me.spoony.playtimecommand.utils.FormatPlaytime.formatPlaytime;
 
-public class PlaytimeCommandCommand {
+public class RootCommand {
 
     //only suggest online players
     private static final SuggestionProvider<CommandSourceStack> ONLINE_PLAYERS = (context, builder) -> {
@@ -27,14 +26,18 @@ public class PlaytimeCommandCommand {
                                 net.minecraft.commands.CommandBuildContext registryAccess,
                                 Commands.CommandSelection environment) {
         dispatcher.register(Commands.literal("playtime")
-                .executes(PlaytimeCommandCommand::execute)
+                .executes(RootCommand::execute)
                 .then(Commands.argument("player", StringArgumentType.word())
                         .suggests(ONLINE_PLAYERS)
-                        .executes(PlaytimeCommandCommand::executeOtherPlayer))
+                        .executes(RootCommand::executeOtherPlayer))
+                .then(Commands.literal("--top")
+                        .executes(TopCommand::execute)
+                        .then(Commands.argument("page", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1))
+                                .executes(TopCommand::execute)))
                 .then(Commands.literal("--about")
-                        .executes(PlaytimeCommandCommand::executeAbout))
+                        .executes(AboutCommand::execute))
                 .then(Commands.literal("--help")
-                        .executes(PlaytimeCommandCommand::executeHelp)));
+                        .executes(HelpCommand::execute)));
     }
 
     private static int execute(CommandContext<CommandSourceStack> context) {
@@ -48,7 +51,7 @@ public class PlaytimeCommandCommand {
 
         try {
             ServerPlayer player = source.getPlayerOrException();
-            return showPlaytime(player, source, true);
+            return printPlaytime(player, source, true);
         } catch (Exception e) {
             source.sendFailure(Component.literal("An error occurred while executing the command!"));
             return 0;
@@ -67,45 +70,14 @@ public class PlaytimeCommandCommand {
                 return 0;
             }
 
-            return showPlaytime(targetPlayer, source, source.isPlayer() && source.getPlayer() == targetPlayer);
+            return printPlaytime(targetPlayer, source, source.isPlayer() && source.getPlayer() == targetPlayer);
         } catch (Exception e) {
             source.sendFailure(Component.literal("An error occurred while executing the command!"));
             return 0;
         }
     }
 
-    private static int executeAbout(CommandContext<CommandSourceStack> context) {
-        CommandSourceStack source = context.getSource();
-
-        Component aboutMessage = Component.empty()
-                .append(Component.literal("Playtime Command")
-                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
-                .append(Component.literal(" " + PlaytimeCommand.getCurrentVersion())
-                        .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD))
-                .append(Component.literal(" by ")
-                        .withStyle(ChatFormatting.GOLD))
-                .append(Component.literal("SpoonySimone")
-                        .withStyle(ChatFormatting.DARK_GREEN));
-
-        source.sendSuccess(() -> aboutMessage, false);
-        return 1;
-    }
-
-    private static int executeHelp(CommandContext<CommandSourceStack> context) {
-        CommandSourceStack source = context.getSource();
-
-        Component helpMessage = Component.literal("Playtime Command Help\n")
-                .withStyle(ChatFormatting.GOLD)
-                .append(Component.literal("/playtime - See your own playtime\n"))
-                .append(Component.literal("/playtime ").append(Component.literal("<username>").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See another online player's playtime\n")))
-                .append(Component.literal("/playtime ").append(Component.literal("--about").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See mod information\n")))
-                .append(Component.literal("/playtime ").append(Component.literal("--help").withStyle(ChatFormatting.DARK_GREEN)).append(Component.literal(" - See command usage")));
-
-        source.sendSuccess(() -> helpMessage, false);
-        return 1;
-    }
-
-    private static int showPlaytime(ServerPlayer player, CommandSourceStack source, boolean isSelf) {
+    private static int printPlaytime(ServerPlayer player, CommandSourceStack source, boolean isSelf) {
         int playtimeTicks = player.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
         String formattedTime = formatPlaytime(playtimeTicks);
 
