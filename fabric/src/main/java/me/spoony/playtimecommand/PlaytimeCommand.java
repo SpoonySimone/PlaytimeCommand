@@ -22,14 +22,13 @@ public class PlaytimeCommand implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(RootCommand::register);
         LOGGER.info("[Playtime Command] Registered command");
 
-        UpdateChecker.checkUpdate(getCurrentVersion());
+        UpdateChecker.checkUpdate(LOGGER::warn, LOGGER::error, getCurrentVersion());
 
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             LOGGER.info("[Playtime Command] Shutting down");
         });
 
-        long endTime = System.currentTimeMillis();
-        LOGGER.info("[Playtime Command] Mod startup completed in {}ms", endTime - startTime);
+        LOGGER.info("[Playtime Command] Mod startup completed in {}ms", System.currentTimeMillis() - startTime);
     }
 
     public static String getCurrentVersion() {
