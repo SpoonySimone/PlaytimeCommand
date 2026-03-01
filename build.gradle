@@ -5,6 +5,11 @@ subprojects {
     version = project.mod_version
     group = project.maven_group
 
+    tasks.withType(AbstractArchiveTask).configureEach {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+
     def targetJavaVersion = 21
     tasks.withType(JavaCompile).configureEach {
         // ensure that the encoding is set to UTF-8, no matter what the system default is
