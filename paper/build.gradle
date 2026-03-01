@@ -1,0 +1,41 @@
+evaluationDependsOn(':common')
+sourceSets.main.java.srcDirs += project(':common').sourceSets.main.java.srcDirs
+
+base {
+    archivesName = project.archives_base_name + "-paper"
+}
+
+repositories {
+    maven {
+        name = 'PaperMC'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:${project.paper_api_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset "UTF-8"
+
+    filesMatching("paper-plugin.yml") {
+        expand "version": project.version
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name + "-paper"
+            from components.java
+        }
+    }
+}

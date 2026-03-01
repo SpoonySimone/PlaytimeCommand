@@ -7,3 +7,6 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+rootProject.name = 'PlaytimeCommand'
+include 'common', 'fabric', 'paper'

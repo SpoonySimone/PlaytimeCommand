@@ -22,7 +22,7 @@ public class PlaytimeCommand implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(RootCommand::register);
         LOGGER.info("[Playtime Command] Registered command");
 
-        UpdateChecker.checkUpdate();
+        UpdateChecker.checkUpdate(getCurrentVersion());
 
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             LOGGER.info("[Playtime Command] Shutting down");

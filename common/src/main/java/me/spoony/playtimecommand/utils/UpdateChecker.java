@@ -1,10 +1,9 @@
 package me.spoony.playtimecommand.utils;
 
-import me.spoony.playtimecommand.PlaytimeCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Properties;
 
 public class UpdateChecker {
@@ -13,14 +12,12 @@ public class UpdateChecker {
     public static String latestVersion;
     public static String modrinthLink = "https://modrinth.com/project/okeAxC3Y/versions";
 
-    private static final String CURRENT_VERSION = PlaytimeCommand.getCurrentVersion();
     private static final String GITHUB_PROPERTIES_URL = "https://raw.githubusercontent.com/SpoonySimone/PlaytimeCommand/master/gradle.properties";
 
-    public static void checkUpdate() {
-
+    public static void checkUpdate(String currentVersion) {
         try {
             Properties prop = new Properties();
-            prop.load(new URL(GITHUB_PROPERTIES_URL).openStream());
+            prop.load(URI.create(GITHUB_PROPERTIES_URL).toURL().openStream());
             latestVersion = prop.getProperty("mod_version");
 
             if (latestVersion == null || latestVersion.equals("0")) {
@@ -28,9 +25,9 @@ public class UpdateChecker {
                 return;
             }
 
-            if (!CURRENT_VERSION.equals(latestVersion)) {
+            if (!currentVersion.equals(latestVersion)) {
                 LOGGER.warn("[Playtime Command] A newer version {} is available! Please consider updating!", latestVersion);
-                LOGGER.warn("[Playtime Command] Current version: {}", CURRENT_VERSION);
+                LOGGER.warn("[Playtime Command] Current version: {}", currentVersion);
                 LOGGER.warn("[Playtime Command] Download here: {}", modrinthLink);
             }
         } catch (Exception e) {

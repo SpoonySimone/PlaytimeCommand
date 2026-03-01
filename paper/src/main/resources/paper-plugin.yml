@@ -1,0 +1,7 @@
+name: PlaytimeCommand
+version: '${version}'
+main: me.spoony.playtimecommand.PlaytimeCommandPlugin
+api-version: '1.21.1'
+description: See users' playtime with a simple command!
+authors:
+  - SpoonySimone

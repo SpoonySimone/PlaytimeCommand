@@ -49,10 +49,11 @@ To build the mod locally, you have to:
 
     **Linux**
     ```
-    ./gradlew build
+    ./gradlew :fabric:build :paper:build
     ```
     **Windows**
     ```
-    gradlew.bat build
+    gradlew.bat :fabric:build :paper:build
     ```
+    You can customize the build command by removing `:fabric:build` or `:paper:build`, depending on which platform you want to compile for.
 3. The built mod will be located in `build/libs/`

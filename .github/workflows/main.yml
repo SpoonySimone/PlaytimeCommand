@@ -18,7 +18,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '21'
-
+ 
     - name: Cache Gradle packages
       uses: actions/cache@v4.2.3
       with:
@@ -33,10 +33,16 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build --no-daemon
+      run: ./gradlew :fabric:build :paper:build --no-daemon
+
+    - name: Collect artifacts
+      run: |
+        mkdir -p artifacts
+        cp paper/build/libs/*.jar artifacts/
+        cp fabric/build/libs/*.jar artifacts/
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4.6.2
       with:
         name: PlaytimeCommand
-        path: build/libs/*.jar
+        path: artifacts/*.jar
