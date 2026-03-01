@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static me.spoony.playtimecommand.utils.FormatPlaytime.formatPlaytime;
 
-@SuppressWarnings("UnstableApiUsage")
 public class TopCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(TopCommand.class);
 

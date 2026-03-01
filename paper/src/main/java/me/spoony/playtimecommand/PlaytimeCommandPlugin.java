@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("UnstableApiUsage")
 public class PlaytimeCommandPlugin extends JavaPlugin {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("Playtime Command");

@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 
-@SuppressWarnings("UnstableApiUsage")
 public class AboutCommand {
 
     public static int execute(CommandContext<CommandSourceStack> context) {

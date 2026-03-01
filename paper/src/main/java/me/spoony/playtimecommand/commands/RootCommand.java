@@ -14,7 +14,6 @@ import org.bukkit.entity.Player;
 
 import static me.spoony.playtimecommand.utils.FormatPlaytime.formatPlaytime;
 
-@SuppressWarnings("UnstableApiUsage")
 public class RootCommand {
 
     private static final SuggestionProvider<CommandSourceStack> ONLINE_PLAYERS = (context, builder) -> {
