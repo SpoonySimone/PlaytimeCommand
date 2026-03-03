@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 
 public class UpdateChecker {
     public static String latestVersion;
-    public static String modrinthLink = "https://modrinth.com/project/okeAxC3Y/versions";
+    private static final String modrinthLink = "https://modrinth.com/project/okeAxC3Y/versions";
 
     private static final String GITHUB_PROPERTIES_URL = "https://raw.githubusercontent.com/SpoonySimone/PlaytimeCommand/master/gradle.properties";
 

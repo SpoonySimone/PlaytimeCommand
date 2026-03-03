@@ -5,3 +5,4 @@ api-version: '1.21.1'
 description: See users' playtime with a simple command!
 authors:
   - SpoonySimone
+folia-supported: true

@@ -12,7 +12,7 @@ public class FormatPlaytime {
         int minutes = (totalSeconds % 3600) / 60;
         int seconds = totalSeconds % 60;
 
-        List<String> components = new ArrayList<>();
+        List<String> components = new ArrayList<>(4);
 
         if (days > 0) {
             components.add(days + (days == 1 ? " day" : " days"));
@@ -34,7 +34,7 @@ public class FormatPlaytime {
 
         for (int i = 0; i < components.size(); i++) {
             result.append(components.get(i));
-            
+
             if (i < components.size() - 2) {
                 result.append(", ");
             } else if (i == components.size() - 2) {

@@ -9,6 +9,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.CompletableFuture;
+
 public class PlaytimeCommand implements ModInitializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("Playtime Command");
@@ -22,13 +24,15 @@ public class PlaytimeCommand implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(RootCommand::register);
         LOGGER.info("[Playtime Command] Registered command");
 
-        UpdateChecker.checkUpdate(LOGGER::warn, LOGGER::error, getCurrentVersion());
+        CompletableFuture.runAsync(() -> UpdateChecker.checkUpdate(
+                        msg -> LOGGER.warn("[Playtime Command] {}", msg),
+                        msg -> LOGGER.error("[Playtime Command] {}", msg),
+                        getCurrentVersion()))
+                .thenRun(() -> LOGGER.info("[Playtime Command] Mod startup completed in {}ms", System.currentTimeMillis() - startTime));
 
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
             LOGGER.info("[Playtime Command] Shutting down");
         });
-
-        LOGGER.info("[Playtime Command] Mod startup completed in {}ms", System.currentTimeMillis() - startTime);
     }
 
     public static String getCurrentVersion() {

@@ -7,6 +7,8 @@ import me.spoony.playtimecommand.utils.UpdateChecker;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.CompletableFuture;
+
 public class PlaytimeCommandPlugin extends JavaPlugin {
 
     private static PlaytimeCommandPlugin instance;
@@ -22,10 +24,10 @@ public class PlaytimeCommandPlugin extends JavaPlugin {
         manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             RootCommand.register(event.registrar());
             getLogger().info("Registered command");
-            getLogger().info("Plugin startup completed in " + (System.currentTimeMillis() - startTime) + "ms");
         });
 
-        UpdateChecker.checkUpdate(getLogger()::warning, getLogger()::severe, getPluginMeta().getVersion());
+        CompletableFuture.runAsync(() -> UpdateChecker.checkUpdate(getLogger()::warning, getLogger()::severe, getPluginMeta().getVersion()))
+                .thenRun(() -> getLogger().info("Plugin startup completed in " + (System.currentTimeMillis() - startTime) + "ms"));
     }
 
     @Override

@@ -5,27 +5,30 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.Stats;
 import net.minecraft.ChatFormatting;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static me.spoony.playtimecommand.utils.FormatPlaytime.formatPlaytime;
 
 public class TopCommand {
-    private static final Logger LOGGER = LogManager.getLogger(TopCommand.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("Playtime Command");
 
     private static final int PLAYERS_PER_PAGE = 10;
-    private static final long CACHE_DURATION_MS = 3000; // 3 seconds
+    private static final long CACHE_DURATION_MS = 2000; // 2 seconds
     private static final long LOADING_MESSAGE_DELAY_MS = 500;
 
     private static List<PlayerPlaytime> cachedPlayerList = null;
     private static long lastCacheTime = 0;
+    private static boolean isCalculating = false;
+    private static final List<PendingRequest> pendingRequests = new ArrayList<>();
 
     public static int execute(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
@@ -37,22 +40,30 @@ public class TopCommand {
         } catch (IllegalArgumentException ignored) {}
 
         final int requestedPage = page;
-        long currentTime = System.currentTimeMillis();
-        if (cachedPlayerList != null && (currentTime - lastCacheTime) < CACHE_DURATION_MS) {
+        if (cachedPlayerList != null && (System.currentTimeMillis() - lastCacheTime) < CACHE_DURATION_MS) {
             Component leaderboard = buildLeaderboardPage(cachedPlayerList, requestedPage);
             source.sendSuccess(() -> leaderboard, false);
             return 1;
         }
 
-        AtomicBoolean calculationComplete = new AtomicBoolean(false);
+        pendingRequests.add(new PendingRequest(source, requestedPage));
+        if (isCalculating) return 1;
 
         // send loading message if it has been more than a sec
+        isCalculating = true;
+        List<PlayerPlaytime> snapshot = snapshotPlayerData(source);
+        MinecraftServer server = source.getServer();
+
         CompletableFuture.runAsync(() -> {
             try {
                 Thread.sleep(LOADING_MESSAGE_DELAY_MS);
-                if (!calculationComplete.get()) {
-                    source.sendSuccess(() -> Component.literal("Calculating playtime leaderboard...")
-                            .withStyle(ChatFormatting.YELLOW), false);
+                if (isCalculating) {
+                    server.execute(() -> {
+                        for (PendingRequest req : pendingRequests) {
+                            req.source().sendSuccess(() -> Component.literal("Calculating playtime leaderboard...")
+                                    .withStyle(ChatFormatting.YELLOW), false);
+                        }
+                    });
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -62,35 +73,40 @@ public class TopCommand {
         // calculate leaderboard asynchronously
         CompletableFuture.runAsync(() -> {
             try {
-                List<PlayerPlaytime> playerList = calculatePlayerList(source);
-
-                // cache result
-                cachedPlayerList = playerList;
-                lastCacheTime = System.currentTimeMillis();
-                calculationComplete.set(true);
-
-                // build and print result for requested page
-                Component leaderboard = buildLeaderboardPage(playerList, requestedPage);
-                source.sendSuccess(() -> leaderboard, false);
+                List<PlayerPlaytime> sorted = snapshot.stream()
+                        .sorted(Comparator.comparingInt(PlayerPlaytime::playtimeTicks).reversed())
+                        .toList();
+                server.execute(() -> {
+                    cachedPlayerList = sorted;
+                    lastCacheTime = System.currentTimeMillis();
+                    isCalculating = false;
+                    List<PendingRequest> toServe = new ArrayList<>(pendingRequests);
+                    pendingRequests.clear();
+                    for (PendingRequest req : toServe) {
+                        Component leaderboard = buildLeaderboardPage(sorted, req.page());
+                        req.source().sendSuccess(() -> leaderboard, false);
+                    }
+                });
             } catch (Exception e) {
-                calculationComplete.set(true);
-                source.sendFailure(Component.literal("An error occurred while calculating the leaderboard!"));
                 LOGGER.error("Error calculating leaderboard", e);
+                server.execute(() -> {
+                    isCalculating = false;
+                    for (PendingRequest req : pendingRequests) {
+                        req.source().sendFailure(Component.literal("An error occurred while calculating the leaderboard!"));
+                    }
+                    pendingRequests.clear();
+                });
             }
         });
 
         return 1;
     }
 
-    private static List<PlayerPlaytime> calculatePlayerList(CommandSourceStack source) {
-        List<ServerPlayer> players = source.getServer().getPlayerList().getPlayers();
-
-        return players.stream()
-                .map(player -> {
-                    int playtimeTicks = player.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME));
-                    return new PlayerPlaytime(player.getScoreboardName(), playtimeTicks);
-                })
-                .sorted(Comparator.comparingInt(PlayerPlaytime::playtimeTicks).reversed())
+    private static List<PlayerPlaytime> snapshotPlayerData(CommandSourceStack source) {
+        return source.getServer().getPlayerList().getPlayers().stream()
+                .map(player -> new PlayerPlaytime(
+                        player.getScoreboardName(),
+                        player.getStats().getValue(Stats.CUSTOM.get(Stats.PLAY_TIME))))
                 .toList();
     }
 
@@ -130,7 +146,7 @@ public class TopCommand {
                 formattedTime = formattedTime.substring(0, formattedTime.length() - 1);
             }
 
-            leaderboard = leaderboard
+            leaderboard
                     .append(Component.literal(position + ". ")
                             .withStyle(ChatFormatting.GOLD))
                     .append(Component.literal(pp.playerName())
@@ -141,13 +157,13 @@ public class TopCommand {
                             .withStyle(ChatFormatting.YELLOW));
 
             if (i < endIndex - 1) {
-                leaderboard = leaderboard.append(Component.literal("\n"));
+                leaderboard.append(Component.literal("\n"));
             }
         }
 
         // page navigation (if there are multiple pages)
         if (totalPages > 1) {
-            leaderboard = leaderboard.append(Component.literal("\n"));
+            leaderboard.append(Component.literal("\n"));
 
             MutableComponent navigation = Component.literal("━━━━")
                     .withStyle(ChatFormatting.GOLD);
@@ -161,12 +177,12 @@ public class TopCommand {
                         .withHoverEvent(new net.minecraft.network.chat.HoverEvent.ShowText(
                                 Component.literal("Go to page " + (finalPage - 1)).withStyle(ChatFormatting.GREEN)
                         ));
-                navigation = navigation.append(Component.literal(" << Prev").setStyle(prevStyle));
+                navigation.append(Component.literal(" << Prev").setStyle(prevStyle));
             } else {
-                navigation = navigation.append(Component.literal(" << Prev").withStyle(ChatFormatting.DARK_GRAY));
+                navigation.append(Component.literal(" << Prev").withStyle(ChatFormatting.DARK_GRAY));
             }
 
-            navigation = navigation.append(Component.literal(" " + finalPage + "/" + totalPages + " ").withStyle(ChatFormatting.GRAY));
+            navigation.append(Component.literal(" " + finalPage + "/" + totalPages + " ").withStyle(ChatFormatting.GRAY));
 
             // next page button
             if (finalPage < totalPages) {
@@ -176,18 +192,19 @@ public class TopCommand {
                         .withHoverEvent(new net.minecraft.network.chat.HoverEvent.ShowText(
                                 Component.literal("Go to page " + (finalPage + 1)).withStyle(ChatFormatting.GREEN)
                         ));
-                navigation = navigation.append(Component.literal("Next >> ").setStyle(nextStyle));
+                navigation.append(Component.literal("Next >> ").setStyle(nextStyle));
             } else {
-                navigation = navigation.append(Component.literal("Next >> ").withStyle(ChatFormatting.DARK_GRAY));
+                navigation.append(Component.literal("Next >> ").withStyle(ChatFormatting.DARK_GRAY));
             }
 
-            navigation = navigation.append(Component.literal("━━━━").withStyle(ChatFormatting.GOLD));
+            navigation.append(Component.literal("━━━━").withStyle(ChatFormatting.GOLD));
 
-            leaderboard = leaderboard.append(navigation);
+            leaderboard.append(navigation);
         }
 
         return leaderboard;
     }
 
     private record PlayerPlaytime(String playerName, int playtimeTicks) {}
+    private record PendingRequest(CommandSourceStack source, int page) {}
 }
