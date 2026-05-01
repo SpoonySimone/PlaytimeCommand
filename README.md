@@ -37,7 +37,7 @@ You can download the mod [here](https://modrinth.com/project/PlaytimeCommand).
 > If you just want to use the mod, you can ignore this and [download the mod](https://github.com/SpoonySimone/PlaytimeCommand?tab=readme-ov-file#download) instead.
 
 > [!NOTE]
-> You need to have [Git](https://git-scm.com/) & [JDK 21](https://adoptium.net/temurin/releases?version=21&os=any&arch=any) installed on your computer.
+> You need to have [Git](https://git-scm.com/) & [JDK 25](https://adoptium.net/temurin/releases?version=25&os=any&arch=any) installed on your computer.
 
 To build the mod locally, you have to:
 1. Clone the repository and navigate to it
