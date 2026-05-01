@@ -17,11 +17,12 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    def projVersion = project.version
+    inputs.property "version", projVersion
     filteringCharset "UTF-8"
 
     filesMatching("paper-plugin.yml") {
-        expand "version": project.version
+        expand "version": projVersion
     }
 }
 
