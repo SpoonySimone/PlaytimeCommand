@@ -46,35 +46,6 @@ jar {
     }
 }
 
-remapJar {
-    doLast {
-        def jar = archiveFile.get().asFile
-        def tmp = new File(jar.parentFile, jar.name + ".tmp")
-
-        def commitTime = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'log', '-1', '--format=%ct'
-            standardOutput = commitTime
-        }
-        def timestamp = Long.parseLong(commitTime.toString().trim()) * 1000
-
-        new java.util.zip.ZipOutputStream(new FileOutputStream(tmp)).withCloseable { zout ->
-            new java.util.zip.ZipInputStream(new FileInputStream(jar)).withCloseable { zin ->
-                def entry
-                while ((entry = zin.nextEntry) != null) {
-                    def newEntry = new java.util.zip.ZipEntry(entry.name)
-                    newEntry.time = timestamp
-                    zout.putNextEntry(newEntry)
-                    zout.write(zin.readAllBytes())
-                    zout.closeEntry()
-                }
-            }
-        }
-
-        tmp.renameTo(jar)
-    }
-}
-
 publishing {
     publications {
         create("mavenJava", MavenPublication) {
