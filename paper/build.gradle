@@ -1,6 +1,3 @@
-evaluationDependsOn(':common')
-sourceSets.main.java.srcDirs += project(':common').sourceSets.main.java.srcDirs
-
 base {
     archivesName = project.archives_base_name + "-paper"
 }
@@ -13,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':common')
     compileOnly "io.papermc.paper:paper-api:${project.paper_api_version}"
 }
 
@@ -27,6 +25,8 @@ processResources {
 }
 
 jar {
+    from(project(':common').sourceSets.main.output)
+
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }

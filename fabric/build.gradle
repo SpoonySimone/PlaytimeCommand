@@ -2,9 +2,6 @@ plugins {
     id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
 }
 
-evaluationDependsOn(':common')
-sourceSets.main.java.srcDirs += project(':common').sourceSets.main.java.srcDirs
-
 base {
     archivesName = project.archives_base_name + "-fabric"
 }
@@ -18,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':common')
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
@@ -41,6 +39,8 @@ processResources {
 }
 
 jar {
+    from(project(':common').sourceSets.main.output)
+
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }
