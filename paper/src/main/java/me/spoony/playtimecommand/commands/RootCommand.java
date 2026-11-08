@@ -8,6 +8,8 @@ import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,8 +62,17 @@ public class RootCommand {
 
         try {
             String playerName = StringArgumentType.getString(context, "player");
-            Player targetPlayer = sender.getServer().getPlayer(playerName);
+            Server server = sender.getServer();
 
+            // try getting online
+            OfflinePlayer targetPlayer = server.getPlayer(playerName);
+
+            // not found? ok then they're offline
+            if (targetPlayer == null) {
+                targetPlayer = server.getOfflinePlayerIfCached(playerName);
+            }
+
+            // STILL not found? tell the player
             if (targetPlayer == null) {
                 sender.sendMessage(Component.text("Player '" + playerName + "' not found!").color(NamedTextColor.RED));
                 return 0;
@@ -75,7 +86,7 @@ public class RootCommand {
         }
     }
 
-    private static int printPlaytime(Player player, CommandSender source, boolean isSelf) {
+    private static int printPlaytime(OfflinePlayer player, CommandSender source, boolean isSelf) {
         int playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         String formattedTime = formatPlaytime(playtimeTicks);
 
