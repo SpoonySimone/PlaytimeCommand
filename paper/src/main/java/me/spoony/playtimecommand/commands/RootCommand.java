@@ -9,7 +9,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
 import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -62,17 +61,8 @@ public class RootCommand {
 
         try {
             String playerName = StringArgumentType.getString(context, "player");
-            Server server = sender.getServer();
+            OfflinePlayer targetPlayer = sender.getServer().getOfflinePlayerIfCached(playerName);
 
-            // try getting online
-            OfflinePlayer targetPlayer = server.getPlayer(playerName);
-
-            // not found? ok then they're offline
-            if (targetPlayer == null) {
-                targetPlayer = server.getOfflinePlayerIfCached(playerName);
-            }
-
-            // STILL not found? tell the player
             if (targetPlayer == null) {
                 sender.sendMessage(Component.text("Player '" + playerName + "' not found!").color(NamedTextColor.RED));
                 return 0;
